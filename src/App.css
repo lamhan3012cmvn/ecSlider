@@ -278,10 +278,10 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 	cursor: pointer;
 
 }
-.wrap_popup .title{
-	padding:10px 0;
+.wrap_popup_list .title{
+	padding:20px 0;
 }
-.wrap_popup .title h3
+.wrap_popup_list .title h3
 {
 	font-size: 32px;
 	color: #333;
@@ -349,14 +349,30 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 	font-weight: 400;
 	color: #FFF;
 }
-input[id="modal"]:checked~.overlay,
+/* input[id="modal"]:checked~.overlay,
 input[id="modal_listImage"]:checked~.overlay {
+	display: block;
+} */
+
+.block{
 	display: block;
 }
 
 
-input[id="modal"]:checked~.wrap_popup,
+/* input[id="modal"]:checked~.wrap_popup,
 input[id="modal_listImage"]:checked~.wrap_popup_list {
+	transform: translate(-50%, -50%) scale(1);
+	-webkit-transform: translate(-50%, -50%) scale(1);
+	-moz-transform: translate(-50%, -50%) scale(1);
+	-ms-transform: translate(-50%, -50%) scale(1);
+	-o-transform: translate(-50%, -50%) scale(1);
+	transition: all .3s;
+	-webkit-transition: all .3s;
+	-moz-transition: all .3s;
+	-ms-transition: all .3s;
+	-o-transition: all .3s;
+} */
+.display{
 	transform: translate(-50%, -50%) scale(1);
 	-webkit-transform: translate(-50%, -50%) scale(1);
 	-moz-transform: translate(-50%, -50%) scale(1);

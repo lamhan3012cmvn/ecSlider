@@ -3,18 +3,43 @@
 import 'antd/dist/antd.css';
 import './App.css';
 import {useEffect, useRef, useState} from "react"
-
 import { Carousel } from 'antd';
 import img1 from '../src/img/1.jpg';
 import img2 from '../src/img/2.jpg';
 import img3 from '../src/img/3.jpg';
+
+import ModalUpImg from './modalUpImg';
+import ListImg from './listImg';
 import {storage,fire} from "./base"
 function App() {
-	console.log("load")
-	const [url,setUrl]=useState(null)
+	
+	const [showListImg,setshowListImg]=useState(false)
+	const [showUpload,setshowUpload]=useState(false)
+
+	const hidden=()=>{
+		setshowListImg(false)
+		setshowUpload(false)
+	}
+	const [list,setList]=useState([])
+	const fetch=async()=>{
+		const resArr=[]
+		await fire.firestore().collection('Image').get().then(res=>{
+			const docs=res.docs
+			docs.forEach(e=>resArr.push(e.data()))
+		})
+		setList(resArr)
+		}
+	useEffect(()=>{
+		
+		fetch()
+		
+	},[])
+
+	
+    const [url,setUrl]=useState(null)
 	const [image,setImage]=useState(null)
 	const nameRef = useRef(null)
-	const onChangeImage= (e)=>{
+    const onChangeImage= (e)=>{
 		if(e.target.files&&e.target.files[0])
 		{
 			const file=e.target.files[0]
@@ -37,91 +62,27 @@ function App() {
 			error=> console.log(error),
 			async ()=>{
 				const res=await storage.ref("images").child(image.name).getDownloadURL()
+				console.log(res)
 				res&&upDatabase(nameRef.current.value,res)
+				hidden()
 			}
 		)
 	}
-	const upDatabase=async(name,link)=>{
+    const upDatabase=async(name,link)=>{
 		await fire.firestore().collection('Image').add({
 			name:name,
 			link:link
 		})
+		setList([])
+		fetch()
 	}
-
-	// useEffect(() => {
-	// 	upDatabase()
-	// }, [])
 	return (
 		<div className='App'>
 			<section className='hero'>
-					<input type='checkbox' id='modal' hidden/>
-					<label htmlFor='modal' className='overlay'></label>
-					
-					<input type='checkbox' id='modal_listImage' hidden/>
-					<label htmlFor='modal_listImage' className='overlay'></label>
+					<label className={(showListImg||showUpload)?"overlay  block":"overlay"} onClick={hidden}></label>
+					<ModalUpImg isShow={showUpload} url={url} nameRef={nameRef} func={{upLoad:upLoad,onChange:onChangeImage}}/>
 
-					<div className='wrap_popup'>
-						<div className="title">
-							<h3>New image</h3>
-						</div>
-						<div className='imgBx'>
-							<img src={url} alt="abc"></img>
-						</div>
-						<label htmlFor="inputImage" className="btn_inputFile" >Choose Image</label>
-
-						<div className="form-control-input">
-							<input type="input"  ref={nameRef} required/>
-							<label>Name Image</label>
-						</div>
-					
-						<label htmlFor='modal' className='btn_submit' onClick={upLoad}>
-							Submit
-						</label>
-						<input type="file" className="form-control-file" id="inputImage" onChange={onChangeImage} hidden/>
-					</div>
-
-					<div className='wrap_popup_list'>
-						<div className="title">
-							<h3>List Image</h3>
-						</div>
-						<div className="listBx">
-							<div className="list">
-								<p className="items">
-									index  :  name
-								</p>
-								<p className="items">
-									index  :  name
-								</p>
-								<p className="items">
-									index  :  name
-								</p>
-								<p className="items">
-									index  :  name
-								</p>
-								<p className="items">
-									index  :  name
-								</p>
-								<p className="items">
-									index  :  name
-								</p>
-								<p className="items">
-									index  :  name
-								</p>
-								<p className="items">
-									index  :  name
-								</p>
-								<p className="items">
-									index  :  name
-								</p>
-								<p className="items">
-									index  :  name
-								</p>
-								<p className="items">
-									index  :  name
-								</p>
-							</div>
-						</div>
-					</div>
+					<ListImg isShow={showListImg} listName={list}/>
 
 				<nav className='navbar'>
 					<div className='navbar-container'>
@@ -159,44 +120,35 @@ function App() {
 								exercitationem `?
 							</p>
 							<div className="popup">
-								<label htmlFor='modal' className='btn_Popup'>
+								<label className='btn_Popup' onClick={()=>setshowUpload(true)}>
 									Up Load
 								</label>
-								<label htmlFor='modal_listImage' className='btn_Popup'>
+								<label className='btn_Popup' onClick={()=>setshowListImg(true)}>
 									List Image
 								</label>
 							</div>
 						</div>
 					</div>
-					<Carousel effect='fade' autoplay className='sliderBox'>
-						<div>
-							<div
+					{list.length>0&&(
+						<Carousel effect='fade' autoplay autoplaySpeed={1500} className='sliderBox'>
+						
+						{list.map(e=>{
+							return(
+								<div>
+								<div
 								className='card'
 								style={{
-									background: `url(${img1})`
+									background: `url(${e.link})`
 								}}>
 								<div className='glass'> </div>
 							</div>
-						</div>
-						<div>
-							<div
-								className='card'
-								style={{
-									background: `url(${img2})`
-								}}>
-								<div className='glass'> </div>
 							</div>
-						</div>
-						<div>
-							<div
-								className='card'
-								style={{
-									background: `url(${img3})`
-								}}>
-								<div className='glass'> </div>
-							</div>
-						</div>
-					</Carousel>
+							)
+						})}
+						
+						</Carousel>
+					)}
+					
 				</div>
 				<div className='worker'>
 					<h3> Worker </h3>
