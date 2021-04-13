@@ -56,8 +56,9 @@ function App() {
 			<section className='hero'>
 					<input type='checkbox' id='modal' hidden/>
 					<label htmlFor='modal' className='overlay'></label>
-					{/* <input type='checkbox' id='modal_listImage' hidden/>
-					<label htmlFor='modal_listImage' className='overlay'></label> */}
+					
+					<input type='checkbox' id='modal_listImage' hidden/>
+					<label htmlFor='modal_listImage' className='overlay'></label>
 
 					<div className='wrap_popup'>
 						<div className="title">
@@ -69,8 +70,8 @@ function App() {
 						<label htmlFor="inputImage" className="btn_inputFile" >Choose Image</label>
 
 						<div className="form-control-input">
+							<input type="input"  ref={nameRef} required/>
 							<label>Name Image</label>
-							<input type="input"  ref={nameRef}/>
 						</div>
 					
 						<label htmlFor='modal' className='btn_submit' onClick={upLoad}>
@@ -79,7 +80,7 @@ function App() {
 						<input type="file" className="form-control-file" id="inputImage" onChange={onChangeImage} hidden/>
 					</div>
 
-					{/* <div className='wrap_popup wrap_popup_list'>
+					<div className='wrap_popup_list'>
 						<div className="title">
 							<h3>List Image</h3>
 						</div>
@@ -120,7 +121,7 @@ function App() {
 								</p>
 							</div>
 						</div>
-					</div> */}
+					</div>
 
 				<nav className='navbar'>
 					<div className='navbar-container'>

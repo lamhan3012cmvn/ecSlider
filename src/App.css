@@ -231,7 +231,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 	border-radius: 10px;
 }
 
-.wrap_popup {
+.wrap_popup ,.wrap_popup_list{
 	width: 450px;
 	height: 500px;
 	background: rgba( 255, 255, 255, 0.5 );
@@ -298,6 +298,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 	position: absolute;
 	top: 20px;
 	left: 20px;
+	transition: 1s ease-in-out all;
 }
 .form-control-input input{
 	border: none;
@@ -308,9 +309,12 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 	width: 100%;
 	outline: none;
 	font-size: 18px;
+	
 }
-.form-control-input label ~ input:hover{
-	top: 0;
+.form-control-input input:focus ~ label,
+.form-control-input input:valid ~ label{
+	transform: translateY(-30px) translateX(-35px);
+	color: #333;
 }
 .btn_submit{
 	padding:10px 35px;
