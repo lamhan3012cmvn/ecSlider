@@ -1,16 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import 'antd/dist/antd.css';
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 import './App.css';
 import {useEffect, useRef, useState} from "react"
-import { Carousel } from 'antd';
-import img1 from '../src/img/1.jpg';
-import img2 from '../src/img/2.jpg';
-import img3 from '../src/img/3.jpg';
-
 import ModalUpImg from './modalUpImg';
 import ListImg from './listImg';
 import {storage,fire} from "./base"
+import Slider from "react-slick";
 function App() {
 	
 	const [showListImg,setshowListImg]=useState(false)
@@ -76,6 +73,14 @@ function App() {
 		setList([])
 		fetch()
 	}
+	const settings = {
+		dots: false,
+		infinite: true,
+		speed: 400,
+		autoplay:true,
+		slidesToShow: 1,
+		slidesToScroll: 1
+	};
 	return (
 		<div className='App'>
 			<section className='hero'>
@@ -92,16 +97,16 @@ function App() {
 						<div className='nav-menu'>
 							<ul className='nav-menu_wrap'>
 								<li className='nav-items'>
-									<a href='#'> about us </a>
+									<a> about us </a>
 								</li>
 								<li className='nav-items'>
-									<a href='#'> services </a>
+									<a> services </a>
 								</li>
 								<li className='nav-items'>
-									<a href='#'> works </a>
+									<a> works </a>
 								</li>
 								<li className='nav-items'>
-									<a href='#'> contact </a>
+									<a> contact </a>
 								</li>
 							</ul>
 						</div>
@@ -130,30 +135,33 @@ function App() {
 						</div>
 					</div>
 					{list.length>0&&(
-						<Carousel effect='fade' autoplay autoplaySpeed={1500} className='sliderBox'>
-						
-						{list.map(e=>{
+						<Slider {...settings} className='sliderBox'>
+							{list.map(e=>{
 							return(
 								<div>
-								<div
-								className='card'
-								style={{
-									background: `url(${e.link})`
-								}}>
-								<div className='glass'> </div>
-							</div>
-							</div>
-							)
-						})}
+									<div
+									className='card'
+									style={{
+										background: `url(${e.link})`
+									}}>
+									<div className='glass'>
+									<h3>
+											{e.name}
+									</h3>
+									</div>
+									
+								</div>
+							</div>)})}
+						</Slider>
 						
-						</Carousel>
-					)}
+					)}	
 					
 				</div>
 				<div className='worker'>
 					<h3> Worker </h3>
 				</div>
 			</section>
+			
 		</div>
 	);
 }
