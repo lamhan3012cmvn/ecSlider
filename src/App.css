@@ -141,6 +141,7 @@
 .contentBx .content p {
 	color: #000;
 	font-size: 20px;
+	margin: 30px 0;
 }
 
 .sliderBox {
@@ -177,6 +178,7 @@
 	background: rgba(255, 255, 255, 0.3);
 	border-radius: 30px;
 	padding: 5px 30px;
+	margin-bottom: 20px;
 }
 
 .worker {
@@ -354,34 +356,30 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 	width: 100%;
 	overflow-y: scroll;
 }
+.wrap_popup_list .listBx .list .items{
+	height: 70px;
+	width: 95%;
+	padding: 0 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: #fff solid 1px;
+}
+.wrap_popup_list .listBx img{
+	height: 50px;
+	width: 50px;
+
+}
 .wrap_popup_list .listBx .list p{
+	text-align: left	;
 	font-size: 20px;
 	font-weight: 400;
 	color: #FFF;
 }
-/* input[id="modal"]:checked~.overlay,
-input[id="modal_listImage"]:checked~.overlay {
-	display: block;
-} */
 
 .block{
 	display: block;
 }
-
-
-/* input[id="modal"]:checked~.wrap_popup,
-input[id="modal_listImage"]:checked~.wrap_popup_list {
-	transform: translate(-50%, -50%) scale(1);
-	-webkit-transform: translate(-50%, -50%) scale(1);
-	-moz-transform: translate(-50%, -50%) scale(1);
-	-ms-transform: translate(-50%, -50%) scale(1);
-	-o-transform: translate(-50%, -50%) scale(1);
-	transition: all .3s;
-	-webkit-transition: all .3s;
-	-moz-transition: all .3s;
-	-ms-transition: all .3s;
-	-o-transition: all .3s;
-} */
 .display{
 	transform: translate(-50%, -50%) scale(1);
 	-webkit-transform: translate(-50%, -50%) scale(1);
